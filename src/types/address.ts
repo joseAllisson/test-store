@@ -12,7 +12,6 @@ export interface ViaCepResponse {
     erro: boolean;
 }
 
-
 export interface AddressInfo {
     cep: string;
     logradouro: string;

@@ -15,7 +15,7 @@ export function ShippingCalculator({
   loading,
   error,
   address,
-  handleCepSubmit
+  handleCepSubmit,
 }: ShippingCalculatorProps) {
   return (
     <div className="space-y-4">
@@ -24,9 +24,16 @@ export function ShippingCalculator({
         <input
           type="text"
           value={cepInput}
-          onChange={(e) => setCepInput(e.target.value.replace(/\D/g, ''))}
+          onChange={(e) => {
+            const rawValue = e.target.value.replace(/\D/g, ''); // remove não-dígitos
+            const maskedValue = rawValue
+              .replace(/^(\d{5})(\d)/, '$1-$2') // insere o traço após o quinto dígito
+              .slice(0, 9); // limita a 9 caracteres totais (8 números + 1 traço)
+
+            setCepInput(maskedValue);
+          }}
           placeholder="Digite seu CEP"
-          maxLength={8}
+          maxLength={9}
           className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
         />
         <button
@@ -38,20 +45,18 @@ export function ShippingCalculator({
         </button>
       </form>
 
-      {error && (
-        <p className="text-red-500">{error}</p>
-      )}
+      {error && <p className="text-red-500">{error}</p>}
 
       {address && (
         <>
-        <p className="text-primary-dark font-bold">Disponível!</p>
-        <div className="p-4 bg-primary-light rounded-lg border border-primary-light">
-          <p className="font-medium text-primary-dark">Endereço de entrega:</p>
-          <p className="text-primary-dark">{address.logradouro}</p>
-          <p className="text-primary-dark">{address.bairro}</p>
-          <p className="text-primary-dark">{`${address.localidade} - ${address.uf}`}</p>
-          <p className="text-primary-dark">{address.cep}</p>
-        </div>
+          <p className="text-primary-dark font-bold">Disponível!</p>
+          <div className="p-4 bg-primary-light rounded-lg border border-primary-light">
+            <p className="font-medium text-primary-dark">Endereço de entrega:</p>
+            <p className="text-primary-dark">{address.logradouro}</p>
+            <p className="text-primary-dark">{address.bairro}</p>
+            <p className="text-primary-dark">{`${address.localidade} - ${address.uf}`}</p>
+            <p className="text-primary-dark">{address.cep}</p>
+          </div>
         </>
       )}
     </div>

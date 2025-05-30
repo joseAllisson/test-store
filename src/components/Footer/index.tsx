@@ -60,11 +60,11 @@ export function Footer() {
             <p className="text-gray-600">
               Receba novidades e promoções exclusivas!
             </p>
-            <form className="flex gap-2">
+            <form className="flex flex-wrap gap-2">
               <input
                 type="email"
                 placeholder="Seu melhor email"
-                className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
+                className="max-w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none"
               />
               <button
                 type="submit"

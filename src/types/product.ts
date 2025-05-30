@@ -1,6 +1,7 @@
 export interface ProductVariant {
   size: string;
   color: string;
+  id?: string;
 }
 
 export interface Product {
@@ -12,4 +13,8 @@ export interface Product {
     sizes: string[];
     colors: string[];
   };
+}
+
+export interface CartItem extends Product {
+  quantity: number;
 }
